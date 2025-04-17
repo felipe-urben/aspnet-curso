@@ -1,0 +1,45 @@
+﻿@using CadastroDeContatos.Enums
+@model UserModel
+@{
+    ViewData["Title"] = "Editar usuário";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Editar usuário</h1>
+</div>
+
+<form asp-controller="User" asp-action="Editar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" asp-for="Nome" class="form-control">
+        @Html.ValidationMessageFor(x => x.Nome)
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" asp-for="Email" class="form-control">
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
+
+    <div class="form-group">
+        <label for="celular">Login</label>
+        <input type="text" asp-for="Login" class="form-control">
+        @Html.ValidationMessageFor(x => x.Login)
+    </div>
+
+    <div class="form-group">
+        <label for="Perfil">Perfil</label>
+        <select asp-for="Perfil" class="form-control">
+            <option value="">Selecione o perfil</option>
+            <option value="@PerfilEnum.Admin">Administrador</option>
+            <option value="@PerfilEnum.Standart">Usuário</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.Perfil)
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a role="button" class="btn btn-secondary" asp-controller="User" asp-action="index">Voltar</a>
+</form>

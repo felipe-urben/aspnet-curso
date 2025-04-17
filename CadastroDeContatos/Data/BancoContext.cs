@@ -11,5 +11,6 @@ namespace CadastroDeContatos.Data
         }
 
         public DbSet<ContatoModel> Contato { get; set; }
+        public DbSet<UserModel> Usuario { get; set; }
     }
 }

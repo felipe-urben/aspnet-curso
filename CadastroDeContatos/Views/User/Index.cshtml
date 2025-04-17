@@ -1,11 +1,11 @@
-﻿@model List<ContatoModel>
+﻿@model List<UserModel>
 @{
-    ViewData["Title"] = "Listagem de Contatos";		
+    ViewData["Title"] = "Listagem de Usuários";
 }
 
 <div class="text-center">
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a role="button" class="btn btn-success" asp-controller="Contato" asp-action="Criar">Adicionar contato</a>
+        <a role="button" class="btn btn-success" asp-controller="User" asp-action="Criar">Adicionar novo usuário</a>
     </div>
 
     @if (TempData["MensagemSucesso"] != null)
@@ -15,7 +15,7 @@
             @TempData["MensagemSucesso"]
         </div>
     }
-    
+
     @if (TempData["MensagemErro"] != null)
     {
         <div class="alert alert-success" role="alert">
@@ -23,32 +23,34 @@
             @TempData["MensagemErro"]
         </div>
     }
-    <h1 class="display-4">Listagem de contatos</h1>
+    <h1 class="display-4">Listagem de usuários</h1>
 
-    <table class="table" id="tabelaContatos">
+    <table class="table" id="tabelaUsuarios">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Login</th>
                 <th scope="col">Email</th>
-                <th scope="col">Celular</th>
+                <th scope="col">Data Cadastro</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @if(Model != null && Model.Any())
+            @if (Model != null && Model.Any())
             {
-                foreach(var item in Model)
+                foreach (var item in Model)
                 {
                     <tr>
                         <th scope="row">@item.Id</th>
-                        <td>@item.nome</td>
-                        <td>@item.email</td>
-                        <td>@item.celular</td>
+                        <td>@item.Nome</td>
+                        <td>@item.Login</td>
+                        <td>@item.Email</td>
+                        <td>@item.DataCadastro</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Contato" asp-action="editar">Editar</a>
-                                <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Contato" asp-action="apagarConfirmacao">Apagar</a>
+                                <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="User" asp-action="editar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="User" asp-action="ApagarConfirmacao">Apagar</a>
                             </div>
                         </td>
                     </tr>
