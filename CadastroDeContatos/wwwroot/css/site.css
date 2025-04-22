@@ -82,3 +82,13 @@ body {
     width: 30px;
     height: 30px;
 }
+
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-login{
+    width: 300px;
+}

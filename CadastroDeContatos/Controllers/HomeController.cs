@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using CadastroDeContatos.Filters;
 using CadastroDeContatos.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace CadastroDeContatos.Controllers
 {
+    [PaginaUserLogado]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

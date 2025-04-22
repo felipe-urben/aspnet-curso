@@ -4,7 +4,6 @@
     ViewData["Title"] = "Editar usuário";
 }
 
-
 <div class="text-center">
     <h1 class="display-4">Editar usuário</h1>
 </div>
@@ -24,7 +23,7 @@
     </div>
 
     <div class="form-group">
-        <label for="celular">Login</label>
+        <label for="login">Login</label>
         <input type="text" asp-for="Login" class="form-control">
         @Html.ValidationMessageFor(x => x.Login)
     </div>
@@ -34,7 +33,7 @@
         <select asp-for="Perfil" class="form-control">
             <option value="">Selecione o perfil</option>
             <option value="@PerfilEnum.Admin">Administrador</option>
-            <option value="@PerfilEnum.Standart">Usuário</option>
+            <option value="@PerfilEnum.Standart">Padrão</option>
         </select>
         @Html.ValidationMessageFor(x => x.Perfil)
     </div>

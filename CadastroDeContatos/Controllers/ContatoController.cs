@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using CadastroDeContatos.Filters;
 using CadastroDeContatos.Models;
 using CadastroDeContatos.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeContatos.Controllers
 {
+    [PaginaUserLogado]
     public class ContatoController : Controller
     {
 

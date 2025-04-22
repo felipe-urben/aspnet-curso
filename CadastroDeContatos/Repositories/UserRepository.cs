@@ -17,6 +17,7 @@ namespace CadastroDeContatos.Repositories
         public UserModel Adicionar(UserModel usuario)
         {
             usuario.DataCadastro = DateTime.Now;
+            usuario.SetSenhaHash();
             _bancoContext.Usuario.Add(usuario);
             _bancoContext.SaveChanges();
             return usuario;
@@ -35,6 +36,11 @@ namespace CadastroDeContatos.Repositories
             return _bancoContext.Usuario.FirstOrDefault(x => x.Id == Id);
         }
 
+        public UserModel BuscarPorLogin(string login)
+        {
+            return _bancoContext.Usuario.FirstOrDefault(x => x.Login == login);
+        }
+
         public List<UserModel> BuscarTodos()
         {
             return _bancoContext.Usuario.ToList();
@@ -42,13 +48,16 @@ namespace CadastroDeContatos.Repositories
         
         public UserModel Editar(UserModel usuario)
         {
-            UserModel DBUser = BuscarPorId(usuario.Id) ?? throw new Exception("Houve um erro na exclusão do contato");
+            UserModel DBUser = BuscarPorId(usuario.Id) ?? throw new Exception("Houve um erro na edição do contato");
 
             DBUser.Nome = usuario.Nome;
             DBUser.Login = usuario.Login;
             DBUser.Email = usuario.Email;
+            DBUser.Perfil = usuario.Perfil;
             DBUser.DataAtualizacao = DateTime.Now;
 
+            _bancoContext.Usuario.Update(DBUser);
+            _bancoContext.SaveChanges();
             return DBUser;
         }
     }

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using CadastroDeContatos.Filters;
 using CadastroDeContatos.Models;
 using CadastroDeContatos.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeContatos.Controllers
 {
+    [PaginaRestrita] 
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -48,7 +51,7 @@ namespace CadastroDeContatos.Controllers
                 }
                 return View(usuario);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 TempData["MensagemErro"] = $"Não foi possível cadastrar o usuário: ${e.Message}";
                 return RedirectToAction("Index");
@@ -67,7 +70,7 @@ namespace CadastroDeContatos.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 TempData["MensagemErro"] = $"Não foi possível excluir o usuário: ${e.Message}";
                 return RedirectToAction("Index");
@@ -75,19 +78,29 @@ namespace CadastroDeContatos.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editar(UserModel usuario)
+        public IActionResult Editar(UserSemSenhaModel usuarioSemSenha)
         {
             try
             {
+                UserModel usuario = null;
                 if (ModelState.IsValid)
                 {
-                    _userRepository.Editar(usuario);
-                    TempData["MensagemSucesso"] = "Contato editado com sucesso";
+                    usuario = new UserModel() { 
+
+                        Id = usuarioSemSenha.Id,
+                        Nome = usuarioSemSenha.Nome,
+                        Login = usuarioSemSenha.Login,
+                        Email = usuarioSemSenha.Email,
+                        Perfil = usuarioSemSenha.Perfil
+                    };
+
+                    usuario = _userRepository.Editar(usuario);
+                    TempData["MensagemSucesso"] = "Usuário editado com sucesso";
                     return RedirectToAction("Index");
                 }
                 return View(usuario);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 TempData["MensagemErro"] = $"Não foi possível Editar o usuário: ${e.Message}";
                 return RedirectToAction("Index");
