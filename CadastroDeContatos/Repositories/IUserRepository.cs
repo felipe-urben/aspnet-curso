@@ -5,6 +5,7 @@ namespace CadastroDeContatos.Repositories
 {
     public interface IUserRepository
     {
+        UserModel BuscarPorEmailLogin(string email, string login);
         UserModel BuscarPorLogin(string login);
         List<UserModel> BuscarTodos();
         UserModel BuscarPorId(int Id);

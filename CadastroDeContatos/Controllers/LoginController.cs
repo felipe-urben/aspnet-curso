@@ -31,6 +31,11 @@ namespace CadastroDeContatos.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        public IActionResult RedefinirSenha()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Entrar(LoginModel loginModel)
         {
@@ -55,6 +60,31 @@ namespace CadastroDeContatos.Controllers
             catch(Exception e)
             {
                 TempData["MensagemErro"] = $"Não foi possível realizar o login: ${e.Message}";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EnviarLinkRedefinirSenha(RedefinirSenhaModel redefinirSenhaModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    UserModel usuario = _userRepository.BuscarPorEmailLogin(redefinirSenhaModel.Email, redefinirSenhaModel.Login);
+                    if (usuario != null)
+                    {
+                        TempData["MensagemSucesso"] = $"Enviamos um e-mail de confirmação para {usuario.Email}";
+                        return RedirectToAction("Index", "Login");
+                    }
+                    TempData["MensagemErro"] = "Não foi possível redefinir sua senha, por favor verifique o login e e-mail";
+                    return View("Index");
+                }
+                return View("RedefinirSenha");
+            }
+            catch (Exception e)
+            {
+                TempData["MensagemErro"] = $"Não foi possível redefinir sua senha: ${e.Message}";
                 return RedirectToAction("Index");
             }
         }

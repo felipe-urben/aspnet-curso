@@ -90,5 +90,9 @@ body {
 }
 
 .form-login{
-    width: 300px;
+    width: 400px;
+    padding: 30px;
+    border-radius: 20px;
+    border: solid #000000;
+    color: #000000;
 }

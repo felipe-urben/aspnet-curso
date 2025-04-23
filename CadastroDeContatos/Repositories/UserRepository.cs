@@ -31,6 +31,11 @@ namespace CadastroDeContatos.Repositories
             _bancoContext.SaveChanges();
         }
 
+        public UserModel BuscarPorEmailLogin(string email, string login)
+        {
+            return _bancoContext.Usuario.FirstOrDefault(x => x.Email == email && x.Login == login);
+        }
+
         public UserModel BuscarPorId(int Id)
         {
             return _bancoContext.Usuario.FirstOrDefault(x => x.Id == Id);
