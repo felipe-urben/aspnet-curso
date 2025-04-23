@@ -36,6 +36,16 @@ namespace CadastroDeContatos.Controllers
             return View();
         }
 
+        public IActionResult VizualizarNovaSenha(string novaSenha)
+        {
+            if (string.IsNullOrEmpty(novaSenha))
+            {
+                TempData["MensagemErro"] = "Não foi possível gerar uma nova senha";
+                return RedirectToAction("Index");
+            }
+            return View(novaSenha);
+        }
+
         [HttpPost]
         public IActionResult Entrar(LoginModel loginModel)
         {
@@ -74,8 +84,9 @@ namespace CadastroDeContatos.Controllers
                     UserModel usuario = _userRepository.BuscarPorEmailLogin(redefinirSenhaModel.Email, redefinirSenhaModel.Login);
                     if (usuario != null)
                     {
-                        TempData["MensagemSucesso"] = $"Enviamos um e-mail de confirmação para {usuario.Email}";
-                        return RedirectToAction("Index", "Login");
+                        string novaSenha = usuario.GerarSenha();
+                        _userRepository.Editar(usuario);
+                        return View("VizualizarNovaSenha", novaSenha);
                     }
                     TempData["MensagemErro"] = "Não foi possível redefinir sua senha, por favor verifique o login e e-mail";
                     return View("Index");

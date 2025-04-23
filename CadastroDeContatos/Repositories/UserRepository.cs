@@ -23,6 +23,27 @@ namespace CadastroDeContatos.Repositories
             return usuario;
         }
 
+        public UserModel AlterarSenha(AlterarSenhaModel alterarSenhaModel)
+        {
+            UserModel DBUser = BuscarPorId(alterarSenhaModel.Id) ?? throw new Exception("Houve um erro na atualização da senha, usuário não encontrado");
+
+            if (!DBUser.SenhaValida(alterarSenhaModel.SenhaAtual)) throw new Exception("Senha atual não está correta");
+
+            if (DBUser.SenhaValida(alterarSenhaModel.NovaSenha)) throw new Exception("Nova senha deve ser diferente da senha atual");
+
+            if(alterarSenhaModel.ConfirmarNovaSenha != alterarSenhaModel.NovaSenha) throw new Exception("Senha nova diverge de 'Confirmar senha'");
+
+            Console.WriteLine(alterarSenhaModel.ConfirmarNovaSenha);
+            Console.WriteLine(alterarSenhaModel.NovaSenha);
+
+            DBUser.SetNovaSenha(alterarSenhaModel.NovaSenha);
+            DBUser.DataAtualizacao = DateTime.Now;
+            _bancoContext.Usuario.Update(DBUser);
+            _bancoContext.SaveChanges(); 
+            
+            return DBUser;
+        }
+
         public void Apagar(int Id)
         {
             UserModel DBUser = BuscarPorId(Id) ?? throw new Exception("Houve um erro na exclusão do contato");

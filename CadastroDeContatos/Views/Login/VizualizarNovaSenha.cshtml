@@ -1,0 +1,22 @@
+﻿@model string
+@{
+    Layout = "_LayoutDeslogado";
+    ViewData["Title"] = "Visualizar nova senha";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center">Sua nova senha</h1>
+
+            <div class="alert alert-info" role="alert">
+                <p>Sua senha foi redefinida com sucesso. Anote sua nova senha:</p>
+                <h2 class="text-center">@Model</h2>
+            </div>
+
+            <div class="text-center">
+                <a class="btn btn-primary" asp-controller="Login" asp-action="Index">Voltar para Login</a>
+            </div>
+        </div>
+    </div>
+</div>

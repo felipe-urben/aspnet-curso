@@ -11,6 +11,7 @@ namespace CadastroDeContatos.Repositories
         UserModel BuscarPorId(int Id);
         UserModel Adicionar(UserModel usuario);
         UserModel Editar(UserModel usuario);
+        UserModel AlterarSenha(AlterarSenhaModel alterarSenhaModel);
         void Apagar(int Id);
     }
 }

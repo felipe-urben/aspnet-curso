@@ -13,6 +13,9 @@ aria-expanded="false" aria-label="Toggle navigation">
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AlterarSenha" asp-action="Index">Mudar senha</a>
+        </li>
         @if(CadastroDeContatos.Enums.PerfilEnum.Admin == Model.Perfil)
         {
             <li class="nav-item">

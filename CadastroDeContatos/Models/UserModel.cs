@@ -31,5 +31,16 @@ namespace CadastroDeContatos.Models
         {
             Senha = Senha.GerarHash();
         }
+        public string GerarSenha()
+        {
+            string novaSenha = Guid.NewGuid().ToString().Substring(0, 8);
+            Senha = novaSenha.GerarHash();
+            return novaSenha;
+        }
+
+        public void SetNovaSenha(string novaSenha)
+        {
+            Senha = novaSenha.GerarHash();
+        }
     }
 }
