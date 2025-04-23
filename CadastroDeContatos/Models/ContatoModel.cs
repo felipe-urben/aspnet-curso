@@ -13,5 +13,7 @@ namespace CadastroDeContatos.Models
         [Required(ErrorMessage = "Insira o celular do contato")]
         [Phone(ErrorMessage ="Número inválido")]
         public string celular { get; set; }
+        public int ? UsuarioId { get; set; }
+        public UserModel Usuario { get; set; }
     }
 }
