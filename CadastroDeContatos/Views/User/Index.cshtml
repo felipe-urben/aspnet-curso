@@ -50,7 +50,7 @@
                         <td>@item.Email</td>
                         <td>@(item.Perfil == CadastroDeContatos.Enums.PerfilEnum.Admin ? "Administrador" : "Padrão")</td>
                         <td>
-                            <a href="#" class="btn btn-success btn-sm btn-total-contatos">
+                            <a href="javascript:" usuario-id="@item.Id" class="btn btn-success btn-sm btn-total-contatos" asp-controller="User" asp-action="ListarContatoPorUsuarioId">
                                 @(item.Contatos != null && item.Contatos.Any() ? item.Contatos.Count() : 0)
                                 </a>
                         </td>
@@ -67,45 +67,16 @@
         </tbody>
     </table>
 
-    <div id="modai-contatos-usuario" class="modal" tabindex="-1">
-        <div class="modal-dialog">
+    <div id="modal-contatos-usuario" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Listagem de contatos</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    style="font:bold">X</button>
                 </div>
                 <div class="modal-body">
-                    <table class="table" id="tabelaContatos">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Celular</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null && Model.Any())
-                            {
-                                foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Romerson</td>
-                                        <td>romerson@gmail.com</td>
-                                        <td>16 11111 9123</td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Contato" asp-action="editar">Editar</a>
-                                                <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Contato" asp-action="apagarConfirmacao">Apagar</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
+                    <div id="lista-contatos-id"></div>
                 </div>
             </div>
         </div>

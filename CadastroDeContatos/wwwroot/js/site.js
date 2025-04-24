@@ -1,34 +1,45 @@
-﻿$(document).ready(function () {
-    $('#tabelaContatos').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
-        }
-    });
+﻿document.addEventListener('DOMContentLoaded', function () {
 
-    $('#tabelaUsuarios').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
-        }
-    });
 
-    for (let i = 0; i < 1000; i++) {
-        console.log(i);
+    createDataTable = (nome) => {
+        if (document.getElementById(nome)) {
+            new DataTable(nome, {
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+                }
+            });
+        }
     }
 
-    $('.btn-total-contatos').click(() => {
-        console.log("clique");
-        $('#modalTotalContatos').modal('show');
-    })
+    createDataTable('tabelaContatos');
+    createDataTable('tabelaUsuarios');
 
-    $('.close-alert').click(() => {
-        $('.alert').hide();
-    })
 
-    /*let btn = document.querySelector('.close-alert')
-    let alert = document.querySelector('.alert')
-    if (btn && alert) {
-        btn.addEventListener("click", () => {
-            alert.classList.add('d-none');
-        })
-    }*/
+    const botoesAbrirModal = document.querySelectorAll('.btn-total-contatos');
+    botoesAbrirModal.forEach(function (botao) {
+        botao.addEventListener('click', function () {
+            const modal = document.getElementById('modal-contatos-usuario');
+            const bootstrapModal = new bootstrap.Modal(modal);
+
+            $.ajax({
+                type: 'GET',
+                url: "/User/ListarContatoPorUsuarioId", success: function (result) {
+                    $("#lista-contatos-id").html(result);
+                    bootstrapModal.show();
+                }
+            });
+
+           
+        });
+    });
+
+    const botoesFecharAlerta = document.querySelectorAll('.close-alert');
+    botoesFecharAlerta.forEach(function (botao) {
+        botao.addEventListener('click', function () {
+            const alertas = document.querySelectorAll('.alert');
+            alertas.forEach(function (alerta) {
+                alerta.style.display = 'none';
+            });
+        });
+    });
 });
