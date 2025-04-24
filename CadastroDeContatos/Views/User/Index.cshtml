@@ -33,6 +33,7 @@
                 <th scope="col">Login</th>
                 <th scope="col">Email</th>
                 <th scope="col">Perfil</th>
+                <th scope="col">Total de Contatos</th>
                 <th scope="col">Data Cadastro</th>
                 <th scope="col"></th>
             </tr>
@@ -48,6 +49,11 @@
                         <td>@item.Login</td>
                         <td>@item.Email</td>
                         <td>@(item.Perfil == CadastroDeContatos.Enums.PerfilEnum.Admin ? "Administrador" : "Padrão")</td>
+                        <td>
+                            <a href="#" class="btn btn-success btn-sm btn-total-contatos">
+                                @(item.Contatos != null && item.Contatos.Any() ? item.Contatos.Count() : 0)
+                                </a>
+                        </td>
                         <td>@item.DataCadastro</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
@@ -60,4 +66,48 @@
             }
         </tbody>
     </table>
+
+    <div id="modai-contatos-usuario" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Listagem de contatos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="tabelaContatos">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Celular</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Romerson</td>
+                                        <td>romerson@gmail.com</td>
+                                        <td>16 11111 9123</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Contato" asp-action="editar">Editar</a>
+                                                <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Contato" asp-action="apagarConfirmacao">Apagar</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

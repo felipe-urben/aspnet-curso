@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CadastroDeContatos.Filters;
+using CadastroDeContatos.Helper;
 using CadastroDeContatos.Models;
 using CadastroDeContatos.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,17 @@ namespace CadastroDeContatos.Controllers
     {
 
         private readonly IContatoRepository _contatoRepository;
+        private readonly ISessao _sessao;
 
-        public ContatoController(IContatoRepository contatoRepository)
+        public ContatoController(IContatoRepository contatoRepository, ISessao sessao)
         {
             _contatoRepository = contatoRepository;
+            _sessao = sessao;
         }
         public IActionResult Index()
         {
-            List<ContatoModel> contatos = _contatoRepository.BuscarTodos();
+            UserModel usuario = _sessao.BuscarSessao();
+            List<ContatoModel> contatos = _contatoRepository.BuscarTodos(usuario.Id);
             return View(contatos);
         }
 
@@ -66,6 +70,8 @@ namespace CadastroDeContatos.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    UserModel usuario = _sessao.BuscarSessao();
+                    contato.UsuarioId = usuario.Id;
                     _contatoRepository.Adicionar(contato);
                     TempData["MensagemSucesso"] = "Contato salvo com sucesso";
                     return RedirectToAction("Index");

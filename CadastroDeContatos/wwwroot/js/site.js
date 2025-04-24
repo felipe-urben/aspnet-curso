@@ -11,12 +11,24 @@
         }
     });
 
+    for (let i = 0; i < 1000; i++) {
+        console.log(i);
+    }
 
-    let btn = document.querySelector('.close-alert')
+    $('.btn-total-contatos').click(() => {
+        console.log("clique");
+        $('#modalTotalContatos').modal('show');
+    })
+
+    $('.close-alert').click(() => {
+        $('.alert').hide();
+    })
+
+    /*let btn = document.querySelector('.close-alert')
     let alert = document.querySelector('.alert')
     if (btn && alert) {
         btn.addEventListener("click", () => {
             alert.classList.add('d-none');
         })
-    }
+    }*/
 });

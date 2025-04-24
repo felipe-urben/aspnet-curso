@@ -1,5 +1,6 @@
 ﻿using CadastroDeContatos.Data;
 using CadastroDeContatos.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,6 @@ namespace CadastroDeContatos.Repositories
             if (!DBUser.SenhaValida(alterarSenhaModel.SenhaAtual)) throw new Exception("Senha atual não está correta");
 
             if (DBUser.SenhaValida(alterarSenhaModel.NovaSenha)) throw new Exception("Nova senha deve ser diferente da senha atual");
-
-            if(alterarSenhaModel.ConfirmarNovaSenha != alterarSenhaModel.NovaSenha) throw new Exception("Senha nova diverge de 'Confirmar senha'");
-
-            Console.WriteLine(alterarSenhaModel.ConfirmarNovaSenha);
-            Console.WriteLine(alterarSenhaModel.NovaSenha);
 
             DBUser.SetNovaSenha(alterarSenhaModel.NovaSenha);
             DBUser.DataAtualizacao = DateTime.Now;
@@ -69,7 +65,9 @@ namespace CadastroDeContatos.Repositories
 
         public List<UserModel> BuscarTodos()
         {
-            return _bancoContext.Usuario.ToList();
+            return _bancoContext.Usuario
+                .Include(x => x.Contatos)
+                .ToList();
         }
         
         public UserModel Editar(UserModel usuario)

@@ -14,12 +14,13 @@ namespace CadastroDeContatos.Repositories
         {
             _bancoContext = bancoContext;
         }
-        public List<ContatoModel> BuscarTodos()
+        public List<ContatoModel> BuscarTodos(int UsuarioId)
         {
-            return _bancoContext.Contato.ToList();
+            return _bancoContext.Contato.Where(x => x.UsuarioId == UsuarioId).ToList();
         }
         public ContatoModel Adicionar(ContatoModel contato)
         {
+            
             _bancoContext.Contato.Add(contato);
             _bancoContext.SaveChanges();
             return contato;
