@@ -13,13 +13,5 @@ namespace CadastroDeContatos.Models
         [Compare("NovaSenha", ErrorMessage = "As senhas divergem")]
         public string ConfirmarNovaSenha { get; set; }
 
-        /*public bool ValidaSenha()
-        {
-            if (NovaSenha == SenhaAtual) return false;
-            if (NovaSenha == ConfirmarNovaSenha) return true;
-
-            return false;
-
-        }*/
     }
 }

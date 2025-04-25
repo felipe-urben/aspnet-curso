@@ -41,9 +41,9 @@ namespace CadastroDeContatos.Controllers
 
         public IActionResult ListarContatoPorUsuarioId(int UsuarioId)
         {
-            //List<int> contatos = _contatoRepository.BuscarIds();
+
             List<ContatoModel> contatos = _contatoRepository.BuscarTodos(UsuarioId);
-            //return Ok(UsuarioId);
+
             return PartialView("_ContatosUsuario", contatos);
         }
 

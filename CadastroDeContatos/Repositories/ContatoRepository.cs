@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using CadastroDeContatos.Data;
 using CadastroDeContatos.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace CadastroDeContatos.Repositories
 {
@@ -18,13 +16,7 @@ namespace CadastroDeContatos.Repositories
         }
         public List<ContatoModel> BuscarTodos(int UsuarioId)
         {
-            /*string query = "SELECT * FROM Contato WHERE UsuarioId = @UsuarioId";
-
-            var parameter = new Microsoft.Data.SqlClient.SqlParameter("@UsuarioId", UsuarioId);
-
-            return _bancoContext.Contato.FromSqlRaw(query, parameter).ToList();*/
-            Console.WriteLine(UsuarioId);
-            return _bancoContext.Contato.Where(x => x.UsuarioId.Equals(UsuarioId)).ToList(); 
+            return _bancoContext.Contato.Where(x => x.UsuarioId == UsuarioId).ToList(); 
         }
         public List<int> BuscarIds()
         {
@@ -62,6 +54,5 @@ namespace CadastroDeContatos.Repositories
             _bancoContext.Contato.Remove(DBcontato);
             _bancoContext.SaveChanges();
         }
-
     }
 }
