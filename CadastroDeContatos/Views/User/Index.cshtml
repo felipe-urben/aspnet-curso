@@ -50,7 +50,7 @@
                         <td>@item.Email</td>
                         <td>@(item.Perfil == CadastroDeContatos.Enums.PerfilEnum.Admin ? "Administrador" : "Padrão")</td>
                         <td>
-                            <a href="javascript:" usuario-id="@item.Id" class="btn btn-success btn-sm btn-total-contatos" asp-controller="User" asp-action="ListarContatoPorUsuarioId">
+                            <a href="javascript:" usuario-id="@item.Id" class="btn btn-success btn-sm btn-total-contatos">
                                 @(item.Contatos != null && item.Contatos.Any() ? item.Contatos.Count() : 0)
                                 </a>
                         </td>
@@ -76,7 +76,7 @@
                     style="font:bold">X</button>
                 </div>
                 <div class="modal-body">
-                    <div id="lista-contatos-id"></div>
+                    <div id="listaContatosId"></div>
                 </div>
             </div>
         </div>

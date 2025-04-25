@@ -1,19 +1,8 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
 
-
-    createDataTable = (nome) => {
-        if (document.getElementById(nome)) {
-            new DataTable(nome, {
-                language: {
-                    url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
-                }
-            });
-        }
-    }
-
-    createDataTable('tabelaContatos');
-    createDataTable('tabelaUsuarios');
-
+    createDataTable('#tabelaUsuarios');
+    createDataTable('#tabelaContatos');
+   
 
     const botoesAbrirModal = document.querySelectorAll('.btn-total-contatos');
     botoesAbrirModal.forEach(function (botao) {
@@ -21,15 +10,23 @@
             const modal = document.getElementById('modal-contatos-usuario');
             const bootstrapModal = new bootstrap.Modal(modal);
 
+            var usuarioId = botao.getAttribute('usuario-id');
+
             $.ajax({
                 type: 'GET',
-                url: "/User/ListarContatoPorUsuarioId", success: function (result) {
-                    $("#lista-contatos-id").html(result);
+                url: `/User/ListarContatoPorUsuarioId/${usuarioId}`, success: function (result) {
+                    console.log(`/User/ListarContatoPorUsuarioId/${usuarioId}`);
+                    $("#listaContatosId").html(result);
                     bootstrapModal.show();
+
+                    /*setTimeout(function () {
+                        if ($.fn.DataTable.isDataTable('#tabelaContatos')) {
+                            $('#tabelaContatos').DataTable().destroy();
+                        }
+                        createDataTable('#tabelaContatos');
+                    }, 100);*/
                 }
             });
-
-           
         });
     });
 
@@ -43,3 +40,11 @@
         });
     });
 });
+
+function createDataTable(id){
+    $(id).DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+        }
+    });
+}

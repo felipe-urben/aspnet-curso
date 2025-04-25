@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using CadastroDeContatos.Data;
 using CadastroDeContatos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CadastroDeContatos.Repositories
 {
@@ -16,11 +18,20 @@ namespace CadastroDeContatos.Repositories
         }
         public List<ContatoModel> BuscarTodos(int UsuarioId)
         {
-            return _bancoContext.Contato.Where(x => x.UsuarioId == UsuarioId).ToList();
+            /*string query = "SELECT * FROM Contato WHERE UsuarioId = @UsuarioId";
+
+            var parameter = new Microsoft.Data.SqlClient.SqlParameter("@UsuarioId", UsuarioId);
+
+            return _bancoContext.Contato.FromSqlRaw(query, parameter).ToList();*/
+            Console.WriteLine(UsuarioId);
+            return _bancoContext.Contato.Where(x => x.UsuarioId.Equals(UsuarioId)).ToList(); 
+        }
+        public List<int> BuscarIds()
+        {
+            return _bancoContext.Contato.Select(x => x.UsuarioId).ToList();
         }
         public ContatoModel Adicionar(ContatoModel contato)
         {
-            
             _bancoContext.Contato.Add(contato);
             _bancoContext.SaveChanges();
             return contato;
@@ -35,9 +46,9 @@ namespace CadastroDeContatos.Repositories
         {
             ContatoModel DBContato = BuscarPorId(contato.Id) ?? throw new System.Exception("Houve um erro na atualização do contato");
 
-            DBContato.nome = contato.nome;
-            DBContato.email = contato.email;
-            DBContato.celular = contato.celular;
+            DBContato.Nome = contato.Nome;
+            DBContato.Email = contato.Email;
+            DBContato.Celular = contato.Celular;
 
             _bancoContext.Contato.Update(DBContato);
             _bancoContext.SaveChanges();
@@ -51,5 +62,6 @@ namespace CadastroDeContatos.Repositories
             _bancoContext.Contato.Remove(DBcontato);
             _bancoContext.SaveChanges();
         }
+
     }
 }
